@@ -1,47 +1,51 @@
-window.addEventListener('DOMContentLoaded', init);
-
 function init() {
-  const voiceSelect = document.getElementById("voice-select");
-  const speakButton = document.getElementById("speak");
-  const textArea = document.getElementById("text-to-speak");
-  const face = document.querySelector("img");
+  const voiceSelect = document.getElementById('voice-select');
+  const textArea = document.getElementById('text-to-speak');
+  const talkButton = document.querySelector('button');
+  const faceImage = document.querySelector('#explore img');
 
+  let voices = [];
+
+  // Populate the voice dropdown
   function loadVoices() {
-    const voices = speechSynthesis.getVoices();
-
-    voiceSelect.innerHTML = ""; // prevent duplicates
-
-    voices.forEach(voice => {
-      const option = document.createElement("option");
-      option.textContent = voice.name;
-      option.value = voice.name;
+    voices = speechSynthesis.getVoices();
+    // Clear existing options except the placeholder
+    voiceSelect.innerHTML = '<option value="select" disabled selected>Select Voice:</option>';
+    voices.forEach((voice, index) => {
+      const option = document.createElement('option');
+      option.value = index;
+      option.textContent = `${voice.name} (${voice.lang})`;
       voiceSelect.appendChild(option);
     });
   }
 
-  speechSynthesis.addEventListener("voiceschanged", loadVoices);
+  // Voices load asynchronously in most browsers
+  loadVoices();
+  speechSynthesis.addEventListener('voiceschanged', loadVoices);
 
-  speakButton.addEventListener("click", () => {
-    const text = textArea.value;
+  // Talk button handler
+  talkButton.addEventListener('click', function () {
+    const text = textArea.value.trim();
     if (!text) return;
+    if (voiceSelect.value === 'select') return;
+
+    // Cancel any ongoing speech
+    speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = voices[parseInt(voiceSelect.value)];
 
-    const voices = speechSynthesis.getVoices();
-    const selectedVoice = voices.find(v => v.name === voiceSelect.value);
+    // Switch image to talking while speaking
+    faceImage.src = 'assets/images/talking.png';
+    faceImage.alt = 'Talking face';
 
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
-    }
-
-    utterance.onstart = () => {
-      face.src = "assets/images/smiling-open.png";
-    };
-
-    utterance.onend = () => {
-      face.src = "assets/images/smiling.png";
-    };
+    utterance.addEventListener('end', function () {
+      faceImage.src = 'assets/images/smiling.png';
+      faceImage.alt = 'Smiling face';
+    });
 
     speechSynthesis.speak(utterance);
   });
 }
+
+window.addEventListener('DOMContentLoaded', init);
