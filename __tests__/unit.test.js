@@ -42,8 +42,8 @@ test("isDate - valid", () => {
 });
 
 test("isDate - invalid", () => {
-  expect(isDate("99/99/99929")).toBe(false);
-  expect(isDate("not2-a-date")).toBe(false);
+  expect(isDate("99/999/9999")).toBe(false);
+  expect(isDate("6")).toBe(false);
 });
 
 //
