@@ -16,7 +16,7 @@ function init() {
     const selected = hornSelect.value;
 
     // Update image
-    hornImage.src = `assets/images/${selected}.png`;
+    hornImage.src = `assets/images/${selected}.svg`;
     hornImage.alt = selected.replace('-', ' ');
 
     // Update audio source
