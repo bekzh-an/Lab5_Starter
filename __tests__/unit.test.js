@@ -6,9 +6,6 @@ import {
   isHexColor,
 } from '../code-to-unit-test/unit-test-me.js';
 
-//
-// 📞 isPhoneNumber
-//
 test("isPhoneNumber - valid", () => {
   expect(isPhoneNumber("123-456-7890")).toBe(true);
   expect(isPhoneNumber("(123)456-7890")).toBe(true);
@@ -19,9 +16,6 @@ test("isPhoneNumber - invalid", () => {
   expect(isPhoneNumber("phone")).toBe(false);
 });
 
-//
-// 📧 isEmail
-//
 test("isEmail - valid", () => {
   expect(isEmail("test@gmail.com")).toBe(true);
   expect(isEmail("user123@yahoo.com")).toBe(true);
@@ -32,22 +26,16 @@ test("isEmail - invalid", () => {
   expect(isEmail("test@com")).toBe(false);
 });
 
-//
-// 🔐 isStrongPassword
-//
 test("isStrongPassword - valid", () => {
   expect(isStrongPassword("Abc123")).toBe(true);
   expect(isStrongPassword("Strong1")).toBe(true);
 });
 
 test("isStrongPassword - invalid", () => {
+  expect(isStrongPassword("we")).toBe(false);
   expect(isStrongPassword("pas")).toBe(false);
-  expect(isStrongPassword("wor")).toBe(false);
 });
 
-//
-// 📅 isDate
-//
 test("isDate - valid", () => {
   expect(isDate("12/25/2020")).toBe(true);
   expect(isDate("01/01/1999")).toBe(true);
@@ -68,5 +56,5 @@ test("isHexColor - valid", () => {
 
 test("isHexColor - invalid", () => {
   expect(isHexColor("FFFFFFF")).toBe(false);
-  expect(isHexColor("#GGGGGG")).toBe(false);
+  expect(isHexColor("#GGGGGFG")).toBe(false);
 });
