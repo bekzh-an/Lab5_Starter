@@ -36,7 +36,7 @@ function init() {
     utterance.voice = voices[parseInt(voiceSelect.value)];
 
     // Switch image to talking while speaking
-    faceImage.src = 'assets/images/talking.png';
+    faceImage.src = 'assets/images/smiling-open.png';
     faceImage.alt = 'Talking face';
 
     utterance.addEventListener('end', function () {
